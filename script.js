@@ -1,11 +1,13 @@
 document.querySelector('form').addEventListener('submit', function(e) {
   e.preventDefault();
 
-  // 선택된 가치 목록 가져오기
-  const selectedValues = Array.from(document.querySelectorAll('input[name="value"]:checked')).map(el => el.value);
+  // 선택된 가치 목록과 분야 가져오기
+  const selectedValues = Array.from(
+    document.querySelectorAll('input[name="value"]:checked')
+  ).map(el => el.value);
   const selectedField = document.getElementById('field').value;
 
-  // 주어진 직업 데이터
+  // 직업 데이터
   const jobs = {
     예술: {
       자율성: { name: "화가", reason: "화가는 자신만의 창작 세계를 표현할 수 있어 자율성이 높습니다." },
@@ -81,18 +83,20 @@ document.querySelector('form').addEventListener('submit', function(e) {
     }
   };
 
-  // 추천 결과 계산
-  let result = '추천 결과가 없어요.';
-
+  // 결과 배열에 여러 직업 담기
+  const results = [];
   if (jobs[selectedField]) {
-    for (const value of selectedValues) {
+    selectedValues.forEach(value => {
       const job = jobs[selectedField][value];
       if (job) {
-        result = `추천 직업: ${job.name} - ${job.reason}`;
-        break;
+        results.push(`✔ ${job.name} - ${job.reason}`);
       }
-    }
+    });
   }
 
-  document.getElementById('result').textContent = result;
+  // 화면에 출력
+  document.getElementById('result').innerHTML =
+    results.length > 0
+      ? results.join('<br>')
+      : '추천 결과가 없어요.';
 });
