@@ -63,7 +63,7 @@ document.querySelector('form').addEventListener('submit', function(e) {
       돈:       { name: "프로 선수",       reason: "실력 기반의 고수익을 기대할 수 있기 때문입니다.",     description: "경기·시합에 출전하여 성과에 따라 보수를 받습니다." },
       영향력:   { name: "스포츠 해설가",   reason: "대중의 이해와 흥미를 이끌기 때문입니다.",          description: "경기를 중계하며 전략·선수 분석을 제공합니다." },
       적성:     { name: "운동선수",       reason: "신체 능력과 적성을 발휘할 수 있기 때문입니다.",       description: "스포츠 종목 훈련·경기를 통해 기량을 발휘합니다." },
-      안정성:   { name: "생활체육 지도사",reason: "공공기관 중심 프로그램으로 안정적이기 때문입니다.",   description: "지역 센터 등에서 일반인을 대상으로 운동 지도를 합니다." }
+      안정성:   { name: "생활체육 지도사",   reason: "공공기관 중심 프로그램으로 안정적이기 때문입니다.",   description: "지역 센터 등에서 일반인을 대상으로 운동 지도를 합니다." }
     },
     정치: {
       자율성:   { name: "독립연구소 소장", reason: "주제를 자유롭게 설정할 수 있기 때문입니다.",        description: "정책·사회 현상을 연구·분석하여 보고서를 발행합니다." },
@@ -91,20 +91,22 @@ document.querySelector('form').addEventListener('submit', function(e) {
       .map(val => ({ value: val, job: jobs[selectedField]?.[val] }))
       .filter(item => item.job);
   } else {
-    // 가치 미선택 시, 모든 6개
+    // 가치 미선택 시 모든 6개
     entriesToShow = Object.entries(jobs[selectedField] || {})
       .map(([value, job]) => ({ value, job }));
   }
 
   // 4) 결과 HTML 생성 및 출력
-  const results = entriesToShow.map(({ value, job }) =>
-    `<strong>${value} ▶ ${job.name}</strong><br>` +
-    `∙ 이유: ${job.reason}<br>` +
-    `∙ 설명: ${job.description}`
-  );
+  const results = entriesToShow.map(({ value, job }) => `
+    <div class="job-card">
+      <h3>${value} ▶ ${job.name}</h3>
+      <p>∙ <strong>이유:</strong> ${job.reason}</p>
+      <p>∙ <strong>설명:</strong> ${job.description}</p>
+    </div>
+  `.trim());
 
   document.getElementById('result').innerHTML =
     results.length > 0
-      ? results.join("<hr>")
-      : "추천 결과가 없어요.";
+      ? results.join('<hr>')
+      : '추천 결과가 없어요.';
 });
