@@ -1,7 +1,10 @@
 document.querySelector('form').addEventListener('submit', function(e) {
   e.preventDefault();
 
-  // 선택된 분야 가져오기
+  // 선택된 가치 목록과 분야 가져오기
+  const selectedValues = Array.from(
+    document.querySelectorAll('input[name="value"]:checked')
+  ).map(el => el.value);
   const selectedField = document.getElementById('field').value;
 
   // 직업 데이터 (모든 분야·가치에 대한 name, reason, description)
@@ -81,18 +84,14 @@ document.querySelector('form').addEventListener('submit', function(e) {
   };
 
   // 결과 생성
-  const results = [];
-  if (jobs[selectedField]) {
-    Object.entries(jobs[selectedField]).forEach(([value, job]) => {
-      results.push(
-        `<strong>${value} ▶ ${job.name}</strong><br>` +
-        `∙ 이유: ${job.reason}<br>` +
-        `∙ 설명: ${job.description}`
-      );
-    });
-  }
 
-  // 화면에 출력
+  // 결과 HTML 생성
+  const results = entriesToShow.map(({ value, job }) =>
+    `<strong>${value} ▶ ${job.name}</strong><br>` +
+    `∙ 이유: ${job.reason}<br>` +
+    `∙ 설명: ${job.description}`
+  );
+
   document.getElementById('result').innerHTML =
     results.length > 0
       ? results.join("<hr>")
