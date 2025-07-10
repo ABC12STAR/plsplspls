@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>직업 추천 사이트</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h2>가치 선택</h2>
+    <form id="form">
+      <label><input type="checkbox" name="value" value="자율성">자율성</label>
+      <label><input type="checkbox" name="value" value="돈">돈</label>
+      <label><input type="checkbox" name="value" value="기여">기여</label>
+      <label><input type="checkbox" name="value" value="영향력">영향력</label>
+      <label><input type="checkbox" name="value" value="안정성">안정성</label>
+      <label><input type="checkbox" name="value" value="적성">적성</label>
+
+      <h2>관심 분야</h2>
+      <select id="field">
+        <option>예술</option>
+        <option>과학</option>
+        <option>기술</option>
+        <option>사회</option> 
+        <option>교육</option>
+        <option>의료</option>
+        <option>스포츠</option>
+        <option>정치</option>
+        <option>국방</option>
+      </select><br><br>
+
+      <button type="submit">추천받기</button>
+    </form>
+    <p id="result"></p>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
