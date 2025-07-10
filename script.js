@@ -1,13 +1,13 @@
 document.querySelector('form').addEventListener('submit', function(e) {
   e.preventDefault();
 
-  // 선택된 가치 목록과 분야 가져오기
+  // 1) 선택된 가치와 분야 가져오기
   const selectedValues = Array.from(
     document.querySelectorAll('input[name="value"]:checked')
   ).map(el => el.value);
   const selectedField = document.getElementById('field').value;
 
-  // 직업 데이터 (모든 분야·가치에 대한 name, reason, description)
+  // 2) 모든 분야·가치에 대한 직업 데이터
   const jobs = {
     예술: {
       자율성:   { name: "화가",           reason: "자유롭게 창작할 수 있기 때문입니다.",          description: "캔버스 위에 그림을 그려 자신의 감정과 아이디어를 시각적으로 표현합니다." },
@@ -83,9 +83,20 @@ document.querySelector('form').addEventListener('submit', function(e) {
     }
   };
 
-  // 결과 생성
+  // 3) 표시할 항목 결정
+  let entriesToShow;
+  if (selectedValues.length > 0) {
+    // 사용자가 체크한 가치만
+    entriesToShow = selectedValues
+      .map(val => ({ value: val, job: jobs[selectedField]?.[val] }))
+      .filter(item => item.job);
+  } else {
+    // 가치 미선택 시, 모든 6개
+    entriesToShow = Object.entries(jobs[selectedField] || {})
+      .map(([value, job]) => ({ value, job }));
+  }
 
-  // 결과 HTML 생성
+  // 4) 결과 HTML 생성 및 출력
   const results = entriesToShow.map(({ value, job }) =>
     `<strong>${value} ▶ ${job.name}</strong><br>` +
     `∙ 이유: ${job.reason}<br>` +
